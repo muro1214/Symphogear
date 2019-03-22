@@ -17,6 +17,7 @@
 
 1. [最新版のjarファイル](https://github.com/muro1214/Symphogear/releases)をダウンロードする
 1. `java -jar SymphogearSimulator.jar` で実行できます
+1. 気合を込めてEnterキーを押すデス！！
 
 ## 実装済みの機能
 
