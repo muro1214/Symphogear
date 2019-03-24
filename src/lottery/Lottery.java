@@ -6,13 +6,14 @@ import java.util.Random;
 
 public class Lottery implements LotteryImpl {
   private final Random random;
+  private final static Lottery LOTTERY = new Lottery();
 
-  public Lottery() {
-    this(System.currentTimeMillis() + Runtime.getRuntime().freeMemory());
+  private Lottery() {
+    random = new Random(System.currentTimeMillis() + Runtime.getRuntime().freeMemory());
   }
 
-  public Lottery(long seed) {
-    this.random = new Random(seed);
+  public static Lottery getInstance() {
+    return LOTTERY;
   }
 
   @Override

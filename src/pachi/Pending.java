@@ -1,4 +1,4 @@
-package symphogear;
+package pachi;
 
 import java.util.LinkedList;
 import java.util.Queue;
@@ -10,7 +10,7 @@ import java.util.Queue;
  */
 public class Pending {
   /** 保留 */
-  private static Queue<Boolean> pendingQueue = new LinkedList<>();
+  private static Queue<WinKind> pendingQueue = new LinkedList<>();
   /** V-STOCKの残数 */
   private static int vStockCount = 0;
 
@@ -21,14 +21,14 @@ public class Pending {
    * 保留を貯める
    * @param result [boolean] 抽選結果
    */
-  public static void setLotteryResult(boolean result) {
+  public static void setLotteryResult(WinKind result) {
     pendingQueue.offer(result);
     if (pendingQueue.size() > 4) {
       throw new IllegalStateException("pending queue is over 4. " + pendingQueue);
     }
   }
 
-  public static boolean getLotteryResult() {
+  public static WinKind getLotteryResult() {
     return pendingQueue.poll();
   }
 
@@ -37,7 +37,7 @@ public class Pending {
   }
 
   public static int getWinCount() {
-    return (int) pendingQueue.stream().filter(it -> it == true).count();
+    return (int) pendingQueue.stream().filter(it -> it == WinKind.Normal || it == WinKind.Kakuhen).count();
   }
 
   public static void setVStockCount(int vStock) {

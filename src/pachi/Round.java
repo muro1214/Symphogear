@@ -1,4 +1,4 @@
-package symphogear;
+package pachi;
 
 import lottery.LotteryListImpl;
 
