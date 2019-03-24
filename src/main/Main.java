@@ -1,33 +1,46 @@
 package main;
 
-import java.util.Objects;
-
+import pachi.Pachi;
+import pachi.PendingLottery;
 import symphogear.LastBattle;
-import symphogear.Round;
-import symphogear.RoundLottery;
+import symphogear.NormalVer;
 import symphogear.SCResult;
 import symphogear.SymphogearChance;
 import util.PrintUtil;
 
 public class Main {
+  private final static String VERSION = "0.0.2";
 
   //TODO: 1種2種複合にしないといけない
   public static void main(String[] args) {
-    // 最終決戦
-    LastBattle lastBattle = new LastBattle();
-    Round round = lastBattle.start();
+    PrintUtil.printlnUtf8("CRF戦姫絶唱シンフォギアシミュレーター Version = " + VERSION + "\n");
 
-    if (Objects.isNull(round)) {
-      PrintUtil.printlnUtf8("不承不承ながら、左打ちしましょう");
-      return;
+    // 台データを生成する
+    Pachi pachiData = new NormalVer();
+
+    // 全回転なら最終決戦をスキップする
+    if (PendingLottery.isZenkaiten(pachiData)) {
+      // 初当たり(16R)のデータを登録する
+      SCResult.registerRoundResult(pachiData.getRound("16R"));
+
+      PrintUtil.printlnUtf8("全回転で当たったため、最終決戦をスキップします");
+    } else {
+      // 初当たり(4R)のデータを登録する
+      SCResult.registerRoundResult(pachiData.getRound("4R"));
+
+      // 最終決戦
+      LastBattle lastBattle = new LastBattle(pachiData);
+      boolean isWin = lastBattle.start();
+
+      if (!isWin) {
+        PrintUtil.printlnUtf8("不承不承ながら、左打ちしましょう");
+        return;
+      }
     }
-
-    SCResult.registerRoundResult(round);
-    RoundLottery.showRoundResult(round);
 
     // シンフォギアチャンス
     PrintUtil.printlnUtf8("シンフォギアチャンス突入！！");
-    SymphogearChance symphogearChance = new SymphogearChance();
+    SymphogearChance symphogearChance = new SymphogearChance(pachiData);
     while (symphogearChance.start()) {
       PrintUtil.printlnUtf8("シンフォギアチャンス継続！！");
     }

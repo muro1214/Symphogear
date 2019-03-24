@@ -2,20 +2,26 @@ package symphogear;
 
 import java.util.Scanner;
 
-import lottery.Lottery;
+import pachi.Pachi;
+import pachi.Pending;
+import pachi.PendingLottery;
+import pachi.Round;
+import pachi.RoundLottery;
+import pachi.WinKind;
 import util.PrintUtil;
 
 public class SymphogearChance {
   private final int SC_MAX = 11;
-  private final int NUMER = 10;
-  private final int DENOM = 74;
+  private final Pachi pachiData;
 
-  private Lottery lottery = new Lottery();
+  public <T extends Pachi> SymphogearChance(T pachiData) {
+    this.pachiData = pachiData;
+  }
 
   @SuppressWarnings("resource")
   public boolean start() {
     Scanner scanner = new Scanner(System.in);
-    boolean win = false;
+    WinKind winKind = WinKind.Miss;
 
     // 残り2回転までの処理(ラスト以外)
     for (int i = 0; i < SC_MAX - 5; i++) {
@@ -26,21 +32,21 @@ public class SymphogearChance {
       scanner.nextLine();
 
       // あたり判定
-      if (Pending.getLotteryResult()) {
+      winKind = Pending.getLotteryResult();
+      if (PendingLottery.isWin(winKind)) {
         // V放出判定
         if (Pending.getVStockCount() > 0) {
           Pending.useVStock();
           PrintUtil.printlnUtf8("V放出！！\n");
         }
 
-        win = true;
         break;
       }
     }
 
     // 当たってたらラウンド消化して終わる
-    if (win) {
-      executeRound();
+    if (PendingLottery.isWin(winKind)) {
+      executeRound(winKind);
       return true;
     }
 
@@ -52,24 +58,25 @@ public class SymphogearChance {
     scanner.nextLine();
     for (int i = 0; i < 4; i++) {
       // あたり判定
-      if (Pending.getLotteryResult()) {
-        win = true;
+      winKind = Pending.getLotteryResult();
+      if (PendingLottery.isWin(winKind)) {
         break;
       }
     }
 
     // 当たってたらラウンド消化して終わる
-    if (win) {
-      executeRound();
+    if (PendingLottery.isWin(winKind)) {
+      executeRound(winKind);
       return true;
     }
 
     // まだ響と流れ星を見ていない！
     PrintUtil.printWithLine("流れ星がくるといいね");
+    winKind = PendingLottery.lot(pachiData);
     scanner.nextLine();
-    if (lottery.lotOf(NUMER, DENOM)) {
+    if (PendingLottery.isWin(winKind)) {
       PrintUtil.printlnUtf8("まだ響と流れ星を見ていない！！");
-      executeRound();
+      executeRound(winKind);
       return true;
     }
 
@@ -77,11 +84,11 @@ public class SymphogearChance {
   }
 
   // ラウンド消化
-  private void executeRound() {
-    Round round = RoundLottery.lot();
+  private void executeRound(WinKind winKind) {
+    Round round = RoundLottery.lot(pachiData.getRounds());
 
     SCResult.registerRoundResult(round);
-    RoundLottery.showRoundResult(round);
+    RoundLottery.showRoundResult(winKind, pachiData, round);
   }
 
   // 保留が4になるまで貯める
@@ -90,7 +97,7 @@ public class SymphogearChance {
 
     if (nowCount < 4) {
       for (int i = 0; i < 4 - nowCount; i++) {
-        Pending.setLotteryResult(lottery.lotOf(NUMER, DENOM));
+        Pending.setLotteryResult(PendingLottery.lot(pachiData));
       }
     }
   }

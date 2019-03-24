@@ -3,22 +3,23 @@ package symphogear;
 import java.util.HashMap;
 import java.util.Map;
 
+import pachi.Round;
+
 /**
  * シンフォギアチャンスの結果
  * @author smuro
  *
  */
 public class SCResult {
-  // 最終決戦突入時のラウンドは4Rで確定なので、初期値は4Rの値にする
-  private static int totalRound = 1;
-  private static int totalPoint = 392;
+  private static int totalRound = 0;
+  private static int totalPoint = 0;
   private static Map<String, Integer> roundResult = new HashMap<>();
 
   static {
     roundResult.put("16R", 0);
     roundResult.put("12R", 0);
     roundResult.put("8R", 0);
-    roundResult.put("4R", 1);
+    roundResult.put("4R", 0);
   }
 
   private SCResult() {

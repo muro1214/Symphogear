@@ -1,32 +1,25 @@
-package symphogear;
+package pachi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import lottery.Lottery;
 import util.PrintUtil;
 
 public class RoundLottery {
-  private static Lottery lottery = new Lottery();
-  private static List<Round> rounds = new ArrayList<>();
-
-  static {
-    rounds.add(new Round("16R", "SPECIAL FEVER", 40, 1470));
-    rounds.add(new Round("12R", "ギアV-COMBO", 3, 1176));
-    rounds.add(new Round("8R", "ギアV-COMBO", 7, 784));
-    rounds.add(new Round("4R", "FEVER", 50, 392));
-  }
 
   private RoundLottery() {
   }
 
-  public static Round lot() {
+  public static Round lot(List<Round> rounds) {
+    Lottery lottery = Lottery.getInstance();
+
     return lottery.lots(rounds);
   }
 
-  public static void showRoundResult(Round round) {
+  public static <T extends Pachi> void showRoundResult(WinKind winKind, T pachiData, Round round) {
     // V-STOCKが残っているときは、V-STOCK演出はでない・・・はず
-    PrintUtil.printWithLine("大当たり!!");
+    String fractional = winKind == WinKind.Normal ? pachiData.getNormalFraction() : pachiData.getKakuhenFraction();
+    PrintUtil.printWithLine("大当たり!! (" + fractional + ")");
 
     if (round.getRound().equals("16R") && isExDrive() && Pending.getVStockCount() == 0) {
       PrintUtil.printlnUtf8("調がいる… (ry");
@@ -47,10 +40,14 @@ public class RoundLottery {
   }
 
   private static boolean isExDrive() {
+    Lottery lottery = Lottery.getInstance();
+
     return lottery.lot(60) && Pending.getWinCount() >= 2;
   }
 
   private static boolean isVStock() {
+    Lottery lottery = Lottery.getInstance();
+
     return lottery.lot(60) && Pending.getWinCount() >= 1;
   }
 }
