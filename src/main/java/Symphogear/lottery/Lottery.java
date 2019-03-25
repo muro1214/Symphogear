@@ -36,8 +36,8 @@ public class Lottery implements LotteryImpl {
 
   @Override
   public <T extends LotteryListImpl> T lots(List<T> lotteryList) throws IllegalArgumentException {
-    int totalProbability = 0;
-    for (T lottery : lotteryList) {
+    var totalProbability = 0;
+    for (var lottery : lotteryList) {
       totalProbability += lottery.getProbability();
     }
 
@@ -45,12 +45,10 @@ public class Lottery implements LotteryImpl {
       throw new IllegalArgumentException("total probability must be greater than 0.");
     }
 
-    lotteryList.sort(Comparator.comparing(LotteryListImpl::getProbability));
-
     T result = null;
-    int tempProbability = 0;
-    int randomProbability = random.nextInt(totalProbability) + 1;
-    for (T lottery : lotteryList) {
+    var tempProbability = 0;
+    var randomProbability = random.nextInt(totalProbability) + 1;
+    for (var lottery : lotteryList) {
       tempProbability += lottery.getProbability();
 
       if (tempProbability >= randomProbability) {

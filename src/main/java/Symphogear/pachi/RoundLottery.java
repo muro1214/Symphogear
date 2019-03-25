@@ -11,9 +11,7 @@ public class RoundLottery {
   }
 
   public static Round lot(List<Round> rounds) {
-    Lottery lottery = Lottery.getInstance();
-
-    return lottery.lots(rounds);
+    return Lottery.getInstance().lots(rounds);
   }
 
   public static <T extends Pachi> void showRoundResult(WinKind winKind, T pachiData, Round round) {
@@ -40,14 +38,10 @@ public class RoundLottery {
   }
 
   private static boolean isExDrive() {
-    Lottery lottery = Lottery.getInstance();
-
-    return lottery.lot(60) && Pending.getWinCount() >= 2;
+    return Lottery.getInstance().lot(60) && Pending.getWinCount() >= 2;
   }
 
   private static boolean isVStock() {
-    Lottery lottery = Lottery.getInstance();
-
-    return lottery.lot(60) && Pending.getWinCount() >= 1;
+    return Lottery.getInstance().lot(60) && Pending.getWinCount() >= 1;
   }
 }

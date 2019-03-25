@@ -37,7 +37,7 @@ public class Pending {
   }
 
   public static int getWinCount() {
-    return (int) pendingQueue.stream().filter(it -> it == WinKind.Normal || it == WinKind.Kakuhen).count();
+    return (int) pendingQueue.stream().filter(it -> PendingLottery.isWin(it)).count();
   }
 
   public static void setVStockCount(int vStock) {
