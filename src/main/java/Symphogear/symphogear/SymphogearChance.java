@@ -1,14 +1,14 @@
-package symphogear;
+package Symphogear.symphogear;
 
 import java.util.Scanner;
 
-import pachi.Pachi;
-import pachi.Pending;
-import pachi.PendingLottery;
-import pachi.Round;
-import pachi.RoundLottery;
-import pachi.WinKind;
-import util.PrintUtil;
+import Symphogear.pachi.Pachi;
+import Symphogear.pachi.Pending;
+import Symphogear.pachi.PendingLottery;
+import Symphogear.pachi.Round;
+import Symphogear.pachi.RoundLottery;
+import Symphogear.pachi.WinKind;
+import Symphogear.util.PrintUtil;
 
 public class SymphogearChance {
   private final int SC_MAX = 11;

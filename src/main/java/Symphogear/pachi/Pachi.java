@@ -1,4 +1,4 @@
-package pachi;
+package Symphogear.pachi;
 
 import java.util.List;
 import java.util.Optional;

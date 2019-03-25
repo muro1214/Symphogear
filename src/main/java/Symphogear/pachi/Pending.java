@@ -1,4 +1,4 @@
-package pachi;
+package Symphogear.pachi;
 
 import java.util.LinkedList;
 import java.util.Queue;

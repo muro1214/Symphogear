@@ -1,4 +1,4 @@
-package symphogear;
+package Symphogear.symphogear;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,14 +6,14 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import lottery.Lottery;
-import pachi.Pachi;
-import pachi.Pending;
-import pachi.PendingLottery;
-import pachi.Round;
-import pachi.RoundLottery;
-import pachi.WinKind;
-import util.PrintUtil;
+import Symphogear.lottery.Lottery;
+import Symphogear.pachi.Pachi;
+import Symphogear.pachi.Pending;
+import Symphogear.pachi.PendingLottery;
+import Symphogear.pachi.Round;
+import Symphogear.pachi.RoundLottery;
+import Symphogear.pachi.WinKind;
+import Symphogear.util.PrintUtil;
 
 public class LastBattle {
   private final int BATTLE_MAX = 5;

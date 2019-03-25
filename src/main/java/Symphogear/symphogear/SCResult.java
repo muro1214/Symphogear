@@ -1,9 +1,9 @@
-package symphogear;
+package Symphogear.symphogear;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import pachi.Round;
+import Symphogear.pachi.Round;
 
 /**
  * シンフォギアチャンスの結果

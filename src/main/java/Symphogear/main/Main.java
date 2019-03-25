@@ -1,12 +1,12 @@
-package main;
+package Symphogear.main;
 
-import pachi.Pachi;
-import pachi.PendingLottery;
-import symphogear.LastBattle;
-import symphogear.NormalVer;
-import symphogear.SCResult;
-import symphogear.SymphogearChance;
-import util.PrintUtil;
+import Symphogear.pachi.Pachi;
+import Symphogear.pachi.PendingLottery;
+import Symphogear.symphogear.LastBattle;
+import Symphogear.symphogear.NormalVer;
+import Symphogear.symphogear.SCResult;
+import Symphogear.symphogear.SymphogearChance;
+import Symphogear.util.PrintUtil;
 
 public class Main {
   private final static String VERSION = "0.0.2";

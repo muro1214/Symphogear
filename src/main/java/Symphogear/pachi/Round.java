@@ -1,6 +1,6 @@
-package pachi;
+package Symphogear.pachi;
 
-import lottery.LotteryListImpl;
+import Symphogear.lottery.LotteryListImpl;
 
 /**
  * ラウンド振り分け

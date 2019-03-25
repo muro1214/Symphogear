@@ -1,9 +1,9 @@
-package pachi;
+package Symphogear.pachi;
 
 import java.util.List;
 
-import lottery.Lottery;
-import util.PrintUtil;
+import Symphogear.lottery.Lottery;
+import Symphogear.util.PrintUtil;
 
 public class RoundLottery {
 

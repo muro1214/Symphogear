@@ -1,6 +1,6 @@
-package pachi;
+package Symphogear.pachi;
 
-import lottery.Lottery;
+import Symphogear.lottery.Lottery;
 
 public class PendingLottery {
 

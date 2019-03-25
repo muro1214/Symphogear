@@ -1,6 +1,6 @@
-package symphogear;
+package Symphogear.symphogear;
 
-import lottery.LotteryListImpl;
+import Symphogear.lottery.LotteryListImpl;
 
 /**
  * 最終決戦のキャラクターパネル
