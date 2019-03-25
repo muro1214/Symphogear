@@ -19,6 +19,19 @@
 1. `java -jar SymphogearSimulator.jar` で実行できます
 1. 気合を込めてEnterキーを押すデス！！
 
+## Javaバージョン
+
+**Java11 が必須となっております。**  
+  
+動作を確認済みのバージョンは、以下のとおりです。
+
+~~~
+>java -version
+openjdk version "11.0.2" 2019-01-15
+OpenJDK Runtime Environment 18.9 (build 11.0.2+9)
+OpenJDK 64-Bit Server VM 18.9 (build 11.0.2+9, mixed mode)
+~~~
+
 ## 実装済みの機能
 
 * 最終決戦
