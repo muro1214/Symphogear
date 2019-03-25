@@ -1,10 +1,10 @@
-package symphogear;
+package Symphogear.symphogear;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import pachi.Pachi;
-import pachi.Round;
+import Symphogear.pachi.Pachi;
+import Symphogear.pachi.Round;
 
 public class NormalVer extends Pachi {
 

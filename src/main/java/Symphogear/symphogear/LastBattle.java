@@ -1,4 +1,4 @@
-package symphogear;
+package Symphogear.symphogear;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,35 +6,39 @@ import java.util.Objects;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import lottery.Lottery;
-import pachi.Pachi;
-import pachi.Pending;
-import pachi.PendingLottery;
-import pachi.Round;
-import pachi.RoundLottery;
-import pachi.WinKind;
-import util.PrintUtil;
+import Symphogear.lottery.Lottery;
+import Symphogear.pachi.Pachi;
+import Symphogear.pachi.Pending;
+import Symphogear.pachi.PendingLottery;
+import Symphogear.pachi.Round;
+import Symphogear.pachi.RoundLottery;
+import Symphogear.pachi.WinKind;
+import Symphogear.util.PrintUtil;
 
 public class LastBattle {
   private final int BATTLE_MAX = 5;
-  private final List<LastBattlePanel> noFeverPanels = new ArrayList<>();
-  private final List<LastBattlePanel> feverPanels = new ArrayList<>();
-  private final LastBattlePanel rainbowPanel = new LastBattlePanel("特異災害対策機動部二課", "響き合うみんなの歌声がくれた…シンフォギアでぇぇぇぇぇぇ！!", 0,
+  private final List<LastBattlePanel> NO_FEVER_PANELS;
+  private final List<LastBattlePanel> FEVER_PANELS;
+  private final LastBattlePanel RAINBOW_PANEL = new LastBattlePanel("特異災害対策機動部二課", "響き合うみんなの歌声がくれた…シンフォギアでぇぇぇぇぇぇ！!", 0,
       false);
   private final Pachi pachiData;
 
   public <T extends Pachi> LastBattle(T pachiData) {
     this.pachiData = pachiData;
 
-    noFeverPanels.add(new LastBattlePanel("雪音 クリス", "手加減なしだぜぇ！", 50, false));
-    noFeverPanels.add(new LastBattlePanel("風鳴 翼", "推して参る！", 30, false));
-    noFeverPanels.add(new LastBattlePanel("立花 響", "この衝動に塗り潰されてなるものか！", 19, false));
-    noFeverPanels.add(new LastBattlePanel("絶唱", "ｶﾞﾄｩﾗﾝﾃﾞｨｽﾊﾞｰﾍﾞﾙｼﾞｰｸﾞﾚｯﾄｴｰﾃﾞﾙﾅｰｰﾙ…", 1, true));
+    this.NO_FEVER_PANELS = List.of(
+      new LastBattlePanel("雪音 クリス", "手加減なしだぜぇ！", 50, false),
+      new LastBattlePanel("風鳴 翼", "推して参る！", 30, false),
+      new LastBattlePanel("立花 響", "この衝動に塗り潰されてなるものか！", 19, false),
+      new LastBattlePanel("絶唱", "ｶﾞﾄｩﾗﾝﾃﾞｨｽﾊﾞｰﾍﾞﾙｼﾞｰｸﾞﾚｯﾄｴｰﾃﾞﾙﾅｰｰﾙ…", 1, true)
+    );
 
-    feverPanels.add(new LastBattlePanel("雪音 クリス", "手加減なしだぜぇ！", 25, false));
-    feverPanels.add(new LastBattlePanel("風鳴 翼", "推して参る！", 40, false));
-    feverPanels.add(new LastBattlePanel("立花 響", "この衝動に塗り潰されてなるものか！", 25, false));
-    feverPanels.add(new LastBattlePanel("絶唱", "ｶﾞﾄｩﾗﾝﾃﾞｨｽﾊﾞｰﾍﾞﾙｼﾞｰｸﾞﾚｯﾄｴｰﾃﾞﾙﾅｰｰﾙ…", 10, true));
+    this.FEVER_PANELS = List.of(
+      new LastBattlePanel("雪音 クリス", "手加減なしだぜぇ！", 25, false),
+      new LastBattlePanel("風鳴 翼", "推して参る！", 40, false),
+      new LastBattlePanel("立花 響", "この衝動に塗り潰されてなるものか！", 25, false),
+      new LastBattlePanel("絶唱", "ｶﾞﾄｩﾗﾝﾃﾞｨｽﾊﾞｰﾍﾞﾙｼﾞｰｸﾞﾚｯﾄｴｰﾃﾞﾙﾅｰｰﾙ…", 10, true)
+    );
   }
 
   @SuppressWarnings("resource")
@@ -43,14 +47,14 @@ public class LastBattle {
     PrintUtil.printlnUtf8("最  終  決  戦  開  幕\n");
 
     // 予め5回転分抽選して、結果とパネルを作る
-    List<WinKind> result = makeResult();
-    List<LastBattlePanel> panels = makePanel(result);
+    var result = makeResult();
+    var panels = makePanel(result);
 
-    Scanner scanner = new Scanner(System.in);
+    var scanner = new Scanner(System.in);
     Round round = null;
-    WinKind thisResult = WinKind.Miss;
+    var thisResult = WinKind.Miss;
 
-    for (int i = 0; i < BATTLE_MAX; i++) {
+    for (var i = 0; i < BATTLE_MAX; i++) {
       PrintUtil.printWithLine("あと " + (BATTLE_MAX - i) + " 回");
       thisResult = result.get(i);
 
@@ -60,14 +64,13 @@ public class LastBattle {
 
       // 虹パネル昇格抽選
       // 16R大当たり、かつ、3%の確率らしいですわよ
-      boolean winRainbow = false;
+      var winRainbow = false;
       if (Objects.nonNull(round) && round.getRound().equals("16R")) {
-        Lottery lottery = Lottery.getInstance();
-        winRainbow = lottery.lot(3);
+        winRainbow = Lottery.getInstance().lot(3);
       }
 
       // 推して参る！
-      printWord(winRainbow ? rainbowPanel : panels.get(i), thisResult);
+      printWord(winRainbow ? RAINBOW_PANEL : panels.get(i), thisResult);
       scanner.nextLine();
 
       if (PendingLottery.isWin(thisResult)) {
@@ -76,7 +79,7 @@ public class LastBattle {
         PrintUtil.printlnUtf8("この身、砕けてなるものかあああああああーーー！！！！\n");
 
         // 残保留の抽選結果を格納しておく
-        for (int j = i + 1; j < BATTLE_MAX; j++) {
+        for (var j = i + 1; j < BATTLE_MAX; j++) {
           Pending.setLotteryResult(result.get(j));
         }
         break;
@@ -102,29 +105,28 @@ public class LastBattle {
   }
 
   private List<WinKind> makeResult() {
-    List<WinKind> list = new ArrayList<>();
+    var list = new ArrayList<WinKind>();
 
-    for (int i = 0; i < BATTLE_MAX; i++) {
+    for (var i = 0; i < BATTLE_MAX; i++) {
       list.add(PendingLottery.lot(pachiData));
     }
 
-    return list;
+    return List.copyOf(list);
   }
 
   private List<LastBattlePanel> makePanel(List<WinKind> result) {
-    List<LastBattlePanel> panels = new ArrayList<>();
-    Lottery lottery = Lottery.getInstance();
+    var panels = new ArrayList<LastBattlePanel>();
 
-    for (WinKind arg : result) {
-      panels.add(lottery.lots(PendingLottery.isWin(arg) ? feverPanels : noFeverPanels));
+    for (var arg : result) {
+      panels.add(Lottery.getInstance().lots(PendingLottery.isWin(arg) ? FEVER_PANELS : NO_FEVER_PANELS));
     }
 
-    List<String> names = panels.stream().map(LastBattlePanel::getName).collect(Collectors.toList());
+    var names = panels.stream().map(LastBattlePanel::getName).collect(Collectors.toList());
 
     PrintUtil.printWithLine("パネル");
     PrintUtil.printlnUtf8(String.join(", ", names) + "\n");
 
-    return panels;
+    return List.copyOf(panels);
   }
 
   private void printWord(LastBattlePanel panel, WinKind result) {
@@ -158,23 +160,17 @@ public class LastBattle {
 
   // フィーネの顔。出る確率がわからないので、次回当たりなら70%、ハズレなら20%で出すことにする
   private boolean fineFace(WinKind nextResult) {
-    Lottery lottery = Lottery.getInstance();
-
-    return lottery.lot(PendingLottery.isWin(nextResult) ? 70 : 20);
+    return Lottery.getInstance().lot(PendingLottery.isWin(nextResult) ? 70 : 20);
   }
 
   // 赤文字。出る確率がわからないので、当たりなら70%、ハズレなら20%で出すことにする
   private boolean redCharactor(WinKind result) {
-    Lottery lottery = Lottery.getInstance();
-
-    return lottery.lot(PendingLottery.isWin(result) ? 70 : 20);
+    return Lottery.getInstance().lot(PendingLottery.isWin(result) ? 70 : 20);
   }
 
   // レバブル。出る確率がわからないので、当たりなら20%、ハズレなら1%で出すことにする
   // 発生タイミングは考慮してない
   private boolean leverVibration(WinKind result) {
-    Lottery lottery = Lottery.getInstance();
-
-    return lottery.lot(PendingLottery.isWin(result) ? 20 : 1);
+    return Lottery.getInstance().lot(PendingLottery.isWin(result) ? 20 : 1);
   }
 }

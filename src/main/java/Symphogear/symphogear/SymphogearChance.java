@@ -1,14 +1,13 @@
-package symphogear;
+package Symphogear.symphogear;
 
 import java.util.Scanner;
 
-import pachi.Pachi;
-import pachi.Pending;
-import pachi.PendingLottery;
-import pachi.Round;
-import pachi.RoundLottery;
-import pachi.WinKind;
-import util.PrintUtil;
+import Symphogear.pachi.Pachi;
+import Symphogear.pachi.Pending;
+import Symphogear.pachi.PendingLottery;
+import Symphogear.pachi.RoundLottery;
+import Symphogear.pachi.WinKind;
+import Symphogear.util.PrintUtil;
 
 public class SymphogearChance {
   private final int SC_MAX = 11;
@@ -20,11 +19,11 @@ public class SymphogearChance {
 
   @SuppressWarnings("resource")
   public boolean start() {
-    Scanner scanner = new Scanner(System.in);
-    WinKind winKind = WinKind.Miss;
+    var scanner = new Scanner(System.in);
+    var winKind = WinKind.Miss;
 
     // 残り2回転までの処理(ラスト以外)
-    for (int i = 0; i < SC_MAX - 5; i++) {
+    for (var i = 0; i < SC_MAX - 5; i++) {
       //保留を4にする
       setPendingToFour();
 
@@ -56,7 +55,7 @@ public class SymphogearChance {
     // ラスト
     PrintUtil.printWithLine("ラスト！！");
     scanner.nextLine();
-    for (int i = 0; i < 4; i++) {
+    for (var i = 0; i < 4; i++) {
       // あたり判定
       winKind = Pending.getLotteryResult();
       if (PendingLottery.isWin(winKind)) {
@@ -85,7 +84,7 @@ public class SymphogearChance {
 
   // ラウンド消化
   private void executeRound(WinKind winKind) {
-    Round round = RoundLottery.lot(pachiData.getRounds());
+    var round = RoundLottery.lot(pachiData.getRounds());
 
     SCResult.registerRoundResult(round);
     RoundLottery.showRoundResult(winKind, pachiData, round);
@@ -93,10 +92,10 @@ public class SymphogearChance {
 
   // 保留が4になるまで貯める
   private void setPendingToFour() {
-    int nowCount = Pending.getPendingCount();
+    var nowCount = Pending.getPendingCount();
 
     if (nowCount < 4) {
-      for (int i = 0; i < 4 - nowCount; i++) {
+      for (var i = 0; i < 4 - nowCount; i++) {
         Pending.setLotteryResult(PendingLottery.lot(pachiData));
       }
     }

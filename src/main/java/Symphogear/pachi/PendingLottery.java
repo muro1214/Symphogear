@@ -1,6 +1,6 @@
-package pachi;
+package Symphogear.pachi;
 
-import lottery.Lottery;
+import Symphogear.lottery.Lottery;
 
 public class PendingLottery {
 
@@ -8,7 +8,7 @@ public class PendingLottery {
   }
 
   public static <T extends Pachi> WinKind lot(T pachiData) {
-    Lottery lottery = Lottery.getInstance();
+    var lottery = Lottery.getInstance();
 
     if(lottery.lotOf(pachiData.getNormalNumer(), pachiData.getNormalDenom())) {
       return WinKind.Normal;
@@ -22,7 +22,7 @@ public class PendingLottery {
   }
 
   public static <T extends Pachi> boolean isZenkaiten(T pachiData) {
-    Lottery lottery = Lottery.getInstance();
+    var lottery = Lottery.getInstance();
 
     return lottery.lotOf(pachiData.getNormalNumer(), pachiData.getNormalDenom()) && lottery.lotOf(1, 100);
   }

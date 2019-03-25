@@ -1,4 +1,4 @@
-package util;
+package Symphogear.util;
 
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
@@ -18,7 +18,6 @@ public class PrintUtil {
       PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.name());
       out.println(string);
     } catch (UnsupportedEncodingException e) {
-      // TODO 自動生成された catch ブロック
       e.printStackTrace();
     }
   }
@@ -32,7 +31,6 @@ public class PrintUtil {
       PrintStream out = new PrintStream(System.out, true, StandardCharsets.UTF_8.name());
       out.print(string);
     } catch (UnsupportedEncodingException e) {
-      // TODO 自動生成された catch ブロック
       e.printStackTrace();
     }
   }

@@ -1,4 +1,4 @@
-package lottery;
+package Symphogear.lottery;
 
 import java.util.List;
 
